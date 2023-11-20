@@ -95,8 +95,8 @@ for (let i = 0; i < fantasyBabyMonsters.length; i++) {
       <p>Rating: ${monster.rating}</p>
       <div class="amountContainer">
           <button class="subtract" id="subtract-${i}">-</button>
-          Antal: ${fantasyBabyMonsters[i].amount}
-          Pris: ${fantasyBabyMonsters[i].price} kr
+          Amount: ${fantasyBabyMonsters[i].amount}
+          Price: ${fantasyBabyMonsters[i].price} kr
           <button class="add" id="add-${i}">+</button>
       </div>
   </section>`;
@@ -125,6 +125,8 @@ function increaseAmount(e) {
   console.log(fantasyBabyMonsters[index]);
  
 }
+
+
 
 
 
