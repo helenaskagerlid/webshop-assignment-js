@@ -1,0 +1,45 @@
+$green-color: #728C69;
+$semi-transparent-green: rgba($green-color, 0.5);
+$black-color: #000000;
+
+body {
+    background-color: $semi-transparent-green;
+}
+
+h1 {
+    font-family: 'bitter';
+    font-weight: 600;
+    font-size: 10vh;
+}
+
+h2, h3 {
+    font-family: 'bitter';
+    font-weight: 600;
+}
+
+
+p {
+    font-family: 'zilla-slab';
+    font-weight: 300;
+    font-size: 2.5vh;
+}
+
+.amountContainer {
+    font-size: 2.5vh;
+    font-family: 'zilla-slab';
+}
+
+.fantasyMonsterPhotos {
+    border: 5px solid $black-color;
+
+}
+
+.add, .subtract {
+    border-radius: 8px;
+    padding: 5px 9px 5px 9px;
+    background-color: white;
+    color: $black-color;
+    border: solid $green-color 2px;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
