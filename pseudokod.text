@@ -1,0 +1,44 @@
+Pseudokod för de första funktionerna
+
+Bredvid/i anslutning till varje munk ska det finnas knappar för att öka och minska antalet beställda munkar. Tänk på att dessa ska fungera även med tangentbordet.
+
+Steg för att göra detta: 
+Steg 1. Skapa knapparna och inputfältet samt ge dem alla ett ID
+Steg 2. Hämta alla element med document.querySelector i en varsin variabel
+Steg 3. Skapa en variabel med namnet amount
+Steg 4. Skapa två eventlistener som är kopplade till plus och minus-knappen
+Steg 5. Skapa två funktioner(add och subtract) för vad som ska ske när knapparna klickas (att siffran i input ska bli mindre respektive större)
+
+
+Produkterna ska gå att sortera utifrån namn, pris, kategori och rating
+
+Steg för att göra detta:
+1. Göra produkterna till objects där varje egenskap definieras
+2. Skapa arrays av objekten där de kan sorteras med metoden sort
+3. Skapa html-element så att användaren kan välja att sortera produkterna och så att dessa syns i skrift
+4. Skapa en funktion (sortProducts) som kan visa aktuell lista beroende på vad användaren väljer för kategori att sortera efter 
+
+
+Totalsumman ska uppdateras baserat på ändringar som sker i antal beställda munkar i realtid
+
+Steg för att göra detta: 
+1. Koppla en funktion (updateTotaltPrice)  till ovan funktioner för plus och minus där man kopplar på priset för varje produkt och räknar ut summan av antal valda produkter 
+2. Skapa ett html element bredvid plus och minus-räkningen av produkterna som kan visa hur mycket totalsumman blir av de valda produkterna 
+
+
+Det ska finnas en varukorgssammanställning som visar endast de munkar som har beställts. Denna ska alltså vara skild från själva beställningsformuläret.
+
+Steg för att skapa detta:
+1. Skapa ett HTML-element där varukorgen ska finnas i 
+2. Hämta detta element med querySelector och skapa en variabel (shoppingCart)
+3. Skapa en funktion(addToShoppingCart)/eller lägga till i en av de som gjorts ovan så att när kunden klickar på plus läggs de produkterna i varukorgen
+
+
+
+Det ska ges någon form av visuell feedback på när varukorgens totalsumma uppdateras. Med detta menas exempelvis någon visuell förändring, såsom en färg-skiftning, storleksskiftning, eller motsvarande.
+
+Steg för att skapa detta:
+1. Koppla ett event till att summan läggs i varukorgen
+2. Lägga på en class genom classList på varukorgs-elementet som gör att färgen skiftas när något läggs i varukorgen
+3. 
+

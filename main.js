@@ -1,4 +1,8 @@
 /**
+ * Detta nedan vill jag försöka koppla till objekt-arrayen nedan, men vet inte alls än hur 
+ * jag ska koppla dem^^ (det kanske inte alls går) To be continued.... Men nedanför den finns 
+ * den JS jag har kopplat till själva sidan.
+ * 
 const minus = document.querySelector('#subtract');
 const plus = document.querySelector('#add');
 const currentNumber = document.querySelector('#currentNumber');
