@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@300;600&family=Zilla+Slab:wght@400;600&display=swap" rel="stylesheet">
-    <title>Pawesome and Ugly Webshop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@300;600&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
   </head>
   <body>
 
@@ -21,18 +20,31 @@
         <!-- Här, på div-en nedan, funderar jag på om jag också borde lägga in labels? Just nu har jag tänkt skapa 
         dem i JS men samtidigt funderar jag på om de inte kan ses som mer "konstanta" element på sidan?-->
 
-        <div id="sortingProducts"></div>
+        <div id="sortingMenu">
+          <label for="sortingMenuHeading">Sort Products:</label>
+          <select id="sortingDropdown">
+            <option value="Price">Price</option>
+            <option value="Name">Name</option>
+            <option value="Category">Category</option>
+            <!-- Add more categories as needed -->
+          </select>
+        
+          <div id="productList">
+            <h2>Baby monster stuffed animals</h3>
+          </div>
+        </div>
 
         <section id="photoGallery">
             <h2></h2>
         </section>
 
-        <section id="productList">
-            <h2>Baby monster stuffed animals</h3>
+            
         </section>
 
         <section id="shoppingCartSummary">
-            <h2>Varukorg</h2>
+          <div class="shoppingCartContainer">
+            <h2>Shoppingcart Summary</h2>
+          </div>
         </section>
 
         <section id="orderForm"></section>
