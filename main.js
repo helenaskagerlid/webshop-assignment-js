@@ -32,9 +32,11 @@ function updatePrice() {
 
 **/
 
+/** MINA PRODUKTER INLAGDA I EN OBJEKT-ARRAY MED OLIKA KATEGORIER*/
+
 const fantasyBabyMonsters = [
   {
-      name: 'Brown hairy turtle',
+      name: 'Ulla brown hairy turtle',
       price: 888,
       category: 'Hairy',
       rating: 5,
@@ -48,8 +50,8 @@ const fantasyBabyMonsters = [
       }
   },
   {
-      name: 'Baby snail',
-      price: 777,
+      name: 'Britta Baby snail',
+      price: 555,
       category: 'Slimy',
       rating: 4.8,
       amount: 0,
@@ -62,7 +64,7 @@ const fantasyBabyMonsters = [
       }
   },
   {
-      name: 'Baby spider',
+      name: 'Amy Baby spider',
       price: 777,
       category: 'Hairy',
       rating: 4.7,
@@ -78,10 +80,130 @@ const fantasyBabyMonsters = [
   },
 ]
 
+/** SORTERING AV PRODUKTER UTEFTER PRIS/NAMN/KATEGORI*/
 
+//const sortingDropdown = document.querySelector('#sortingDropdown');
 const productContainer = document.querySelector('#productList');
 
-for (let i = 0; i < fantasyBabyMonsters.length; i++) {
+
+fantasyBabyMonsters.sort((a, b) => a.price - b.price);
+
+fantasyBabyMonsters.sort((prod1, prod2) => prod1.name > prod2.name);
+console.table(fantasyBabyMonsters);
+
+const categorySlimy = fantasyBabyMonsters.filter(monster => monster.category === 'Slimy')
+console.table(categorySlimy);
+
+function decreaseAmount(e) {
+  const index = e.currentTarget.dataset.id;
+  if (fantasyBabyMonsters[index].amount <= 0) {
+    fantasyBabyMonsters[index].amount = 0;
+  } else {
+    fantasyBabyMonsters[index].amount--;
+  }
+
+ 
+  printMonsters();
+}
+
+function increaseAmount(e) {
+  const index = e.currentTarget.dataset.id;
+  fantasyBabyMonsters[index].amount++;
+  printMonsters();
+  updateCart();
+}
+
+const cartContainer = document.querySelector('#shoppingCartSummary')
+
+function printMonsters() {
+  productContainer.innerHTML = '';
+  fantasyBabyMonsters.forEach((monster, i) => {
+    productContainer.innerHTML += `
+      <article>
+        <img class="fantasyMonsterPhotos" src="${monster.image.src}" 
+        alt="${monster.image.alt}" 
+        width="${monster.image.width}" 
+        height="${monster.image.height}" 
+        loading="${monster.image.loading}">
+        <h3>${monster.name}</h3>
+        <p>Price: ${monster.price}</p>
+        <p>Category: ${monster.category}</p>
+        <p>Rating: ${monster.rating}</p>
+        <div class="amountContainer">
+            <button class="subtract" data-id="${i}">-</button>
+            Amount: <span>${monster.amount}</span> st
+            Price: <span>${monster.price}</span> kr
+            <button class="add" data-id="${i}">+</button>
+        </div>
+      </article>
+    `;
+  });
+
+  const minusButtons = document.querySelectorAll('.subtract');
+  const plusButtons = document.querySelectorAll('.add');
+
+  minusButtons.forEach(btn => {
+    btn.addEventListener('click', decreaseAmount)
+  })
+
+  plusButtons.forEach(btn => {
+  btn.addEventListener('click', increaseAmount)
+  })
+
+  printCartMonsters();
+}
+
+printMonsters();
+
+
+function printCartMonsters() {
+  cartContainer.innerHTML = '';
+
+  let totalAmount = 0;
+  let totalPrice = 0;
+
+  fantasyBabyMonsters.forEach(monster => {
+    if (monster.amount > 0) {
+
+      totalAmount += monster.amount;
+      totalPrice += monster.amount * monster.price;
+
+      cartContainer.innerHTML += `
+        <article>
+          <span>${monster.name}</span> <span>${monster.amount} st</span>
+        </article>
+      `;
+    }
+  });
+
+
+  cartContainer.innerHTML = `<h3>Shopping Cart Summary</h3>${cartContainer.innerHTML}`;
+
+  cartContainer.innerHTML += `
+    <p>Total amount: ${totalAmount} st</p>
+    <p>Total price: ${totalPrice} kr</p>
+  `;
+}
+
+function updateCart() {
+  // Uppdatera varukorgen
+
+  // Lägg till eller ta bort CSS-klassen beroende på om varukorgen är uppdaterad eller inte
+  const cartContainer = document.querySelector('#shoppingCartSummary');
+  cartContainer.classList.add('updated-cart');
+
+  // Använd setTimeout för att ta bort klassen efter en viss tid (t.ex. 2 sekunder)
+  setTimeout(() => {
+    cartContainer.classList.remove('updated-cart');
+  }, 1000); // 2000 millisekunder (2 sekunder)
+}
+
+
+
+
+
+
+/**for (let i = 0; i < fantasyBabyMonsters.length; i++) {
   console.log(i); 
   const monster = fantasyBabyMonsters[i];
   const imageSource = monster.image.src;
@@ -112,6 +234,7 @@ for (let i = 0; i < decreaseButtons.length; i++) {
 function decreaseAmount(e) {
   const index = e.target.id.replace('subtract-', '');
   console.log(fantasyBabyMonsters[index]);
+  fantasyBabyMonsters[index].amount -= 1;
 }
 
 const increaseButtons = Array.from(document.querySelectorAll('.add'))
@@ -123,8 +246,7 @@ for (let i = 0; i < increaseButtons.length; i++) {
 function increaseAmount(e) {
   const index = e.target.id.replace('add-', '');
   console.log(fantasyBabyMonsters[index]);
- 
-}
+} **/
 
 
 
