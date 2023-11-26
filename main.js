@@ -1,42 +1,22 @@
-/**
- * Detta nedan vill jag försöka koppla till objekt-arrayen nedan, men vet inte alls än hur 
- * jag ska koppla dem^^ (det kanske inte alls går) To be continued.... Men nedanför den finns 
- * den JS jag har kopplat till själva sidan.
- * 
-const minus = document.querySelector('#subtract');
-const plus = document.querySelector('#add');
-const currentNumber = document.querySelector('#currentNumber');
-const price = document.querySelector('#price');
-let totalAmount = Number(currentNumber.value);
-
-minus.addEventListener('click', subtract);
-
-function subtract() {
-    currentNumber.value = Math.max(0, Number(currentNumber.value) - 1);
-    totalAmount = Number(currentNumber.value);
-    updatePrice();
-}
-
-plus.addEventListener('click', add);
-
-function add() {
-    currentNumber.value = Number(currentNumber.value) + 1;
-    totalAmount = Number(currentNumber.value); 
-    updatePrice();
-}
-
-function updatePrice() {
-    price.textContent = totalAmount * 15;
-}
 
 
-**/
+
+// DETTA FIXAR SÅ ATT NÄR MAN KLICKAR PÅ DEN LILLA VARUKORGSIKONEN BLIR MAN SKICKAD 
+// TILL VARUKORGSSAMMANFATTNINGEN
+
+const cartButton = document.querySelector('#cartButton');
+const cartContainer = document.querySelector('#shoppingCartSummary')
+
+cartButton.addEventListener('click', function() {
+  cartContainer.scrollIntoView();
+});
 
 /** MINA PRODUKTER INLAGDA I EN OBJEKT-ARRAY MED OLIKA KATEGORIER*/
 
 const fantasyBabyMonsters = [
   {
       name: 'Ulla brown hairy turtle',
+      productNo: 'Product-1',
       price: 888,
       category: 'Hairy',
       rating: 5,
@@ -51,6 +31,7 @@ const fantasyBabyMonsters = [
   },
   {
       name: 'Britta Baby snail',
+      productNo: 'Product-2',
       price: 555,
       category: 'Slimy',
       rating: 4.8,
@@ -65,6 +46,7 @@ const fantasyBabyMonsters = [
   },
   {
       name: 'Amy Baby spider',
+      productNo: 'Product-3',
       price: 777,
       category: 'Hairy',
       rating: 4.7,
@@ -80,45 +62,65 @@ const fantasyBabyMonsters = [
   },
 ]
 
+let productsSorted = false; 
+
 /** SORTERING AV PRODUKTER UTEFTER PRIS/NAMN/KATEGORI*/
 
-//const sortingDropdown = document.querySelector('#sortingDropdown');
+const sortingDropdown = document.querySelector('#sortingDropdown');
 const productContainer = document.querySelector('#productList');
+let sortedMonsters = [...fantasyBabyMonsters];
 
+function sortProductList() {
 
-fantasyBabyMonsters.sort((a, b) => a.price - b.price);
+  const selectedOption = sortingDropdown.value;
 
-fantasyBabyMonsters.sort((prod1, prod2) => prod1.name > prod2.name);
-console.table(fantasyBabyMonsters);
-
-const categorySlimy = fantasyBabyMonsters.filter(monster => monster.category === 'Slimy')
-console.table(categorySlimy);
-
-function decreaseAmount(e) {
-  const index = e.currentTarget.dataset.id;
-  if (fantasyBabyMonsters[index].amount <= 0) {
-    fantasyBabyMonsters[index].amount = 0;
-  } else {
-    fantasyBabyMonsters[index].amount--;
+  if (selectedOption === 'Price') {
+    sortedMonsters.sort((a, b) => a.price - b.price);
+  } else if (selectedOption === 'Name') {
+    sortedMonsters.sort((prod1, prod2) => prod1.name.localeCompare(prod2.name));
+  } else if (selectedOption === 'Category') {
+    sortedMonsters.sort((prod1, prod2) => prod1.category.localeCompare(prod2.category));
   }
 
- 
-  printMonsters();
+  productsSorted = true; 
+
+  // Uppdatera produktlistan efter sortering
+  printBabyMonsters(sortedMonsters);
+
 }
 
-function increaseAmount(e) {
-  const index = e.currentTarget.dataset.id;
-  fantasyBabyMonsters[index].amount++;
-  printMonsters();
-  updateCart();
+sortingDropdown.addEventListener('change', sortProductList);
+
+// Uppdatera produktlistan vid sidans laddning
+sortProductList();
+printBabyMonsters();
+
+function updateCartItemCount() {
+  const cartItemCountSpan = document.querySelector('#cartItemCount');
+  let totalAmount = 0;
+
+  fantasyBabyMonsters.forEach(monster => {
+    totalAmount += monster.amount;
+  });
+
+  cartItemCountSpan.textContent = totalAmount;
 }
 
-const cartContainer = document.querySelector('#shoppingCartSummary')
+updateCartItemCount();
 
-function printMonsters() {
-  productContainer.innerHTML = '';
-  fantasyBabyMonsters.forEach((monster, i) => {
-    productContainer.innerHTML += `
+ /**PRINTAR UT MONSTREN PÅ SIDAN SAMT SKAPAR KNAPPARNA FÖR PLUS OCH MINUS OCH GER DEM
+  * UNIKA ID-en
+  */
+function printBabyMonsters(monsters) {
+  if (productsSorted) {
+    monsters = sortedMonsters;
+  }
+  else if (monsters == undefined) {
+    monsters = fantasyBabyMonsters;
+  }
+  productList.innerHTML = '';
+  monsters.forEach((monster, i) => {
+    productList.innerHTML += `
       <article>
         <img class="fantasyMonsterPhotos" src="${monster.image.src}" 
         alt="${monster.image.alt}" 
@@ -130,31 +132,71 @@ function printMonsters() {
         <p>Category: ${monster.category}</p>
         <p>Rating: ${monster.rating}</p>
         <div class="amountContainer">
-            <button class="subtract" data-id="${i}">-</button>
+            <button class="subtract" data-id="${monster.productNo}">-</button>
             Amount: <span>${monster.amount}</span> st
             Price: <span>${monster.price}</span> kr
-            <button class="add" data-id="${i}">+</button>
+            <button class="add" data-id="${monster.productNo}">+</button>
         </div>
       </article>
     `;
   });
 
+  activatePlusMinusButtons();
+  printCartMonsters();
+  updateCartItemCount();
+}
+
+/**GÖR ATT PLUS OCH MINUS KNAPPARNA FUNKAR NÄR MAN KLICKAR PÅ DEM SÅ ATT ANTALET PRODUKTER
+ * ÖKAR ELLER MINSKAR
+ */
+
+function decreaseAmount(e) {
+  //const index = e.currentTarget.dataset.id;
+  const index = fantasyBabyMonsters.findIndex(item => item.productNo == e.currentTarget.dataset.id);
+  console.log(e.currentTarget.dataset.id);
+
+  if (fantasyBabyMonsters[index].amount <= 0) {
+    fantasyBabyMonsters[index].amount = 0;
+  } else {
+    fantasyBabyMonsters[index].amount--;
+  }
+ 
+  printBabyMonsters();
+}
+
+function increaseAmount(e) {
+  //const index = e.currentTarget.dataset.id;
+  const index = fantasyBabyMonsters.findIndex(item => item.productNo == e.currentTarget.dataset.id);
+  fantasyBabyMonsters[index].amount++;
+  printBabyMonsters();
+  updateCart();
+}
+
+
+
+cartButton.addEventListener('click', function() {
+  shoppingCartSummary.scrollIntoView({ behavior: 'smooth' });
+});
+
+
+
+printBabyMonsters();
+
+function activatePlusMinusButtons() {
   const minusButtons = document.querySelectorAll('.subtract');
   const plusButtons = document.querySelectorAll('.add');
 
   minusButtons.forEach(btn => {
     btn.addEventListener('click', decreaseAmount)
   })
-
+  
   plusButtons.forEach(btn => {
   btn.addEventListener('click', increaseAmount)
   })
-
-  printCartMonsters();
 }
 
-printMonsters();
 
+/**DETTA PRINTAR UT PRODUKTERNA I VARUKORGSAMMANFATTNINGEN */
 
 function printCartMonsters() {
   cartContainer.innerHTML = '';
@@ -182,28 +224,50 @@ function printCartMonsters() {
   cartContainer.innerHTML += `
     <p>Total amount: ${totalAmount} st</p>
     <p>Total price: ${totalPrice} kr</p>
+    <button id="orderButton">Beställ</button>
   `;
 }
 
+/**DETTA GÖR ATT FÄRGEN ÄNDRAS NÄR NÅGOT LÄGGS I VARUKORGEN  */
 function updateCart() {
-  // Uppdatera varukorgen
 
-  // Lägg till eller ta bort CSS-klassen beroende på om varukorgen är uppdaterad eller inte
   const cartContainer = document.querySelector('#shoppingCartSummary');
   cartContainer.classList.add('updated-cart');
 
-  // Använd setTimeout för att ta bort klassen efter en viss tid (t.ex. 2 sekunder)
   setTimeout(() => {
     cartContainer.classList.remove('updated-cart');
-  }, 1000); // 2000 millisekunder (2 sekunder)
+  }, 1000);
 }
 
+/**DETTA DÖLJER ORDERFORM OCH VISAR DET NÄR ANVÄNDAREN KLICKAR PÅ BESTÄLL */
+
+const orderForm = document.querySelector('#orderForm');
+const orderButton = document.querySelector('#orderButton');
+
+hideOrderForm();
+
+orderButton.addEventListener('click', () => {
+
+  orderForm.style.display = 'block';
+  orderForm.removeAttribute('tabindex');
+});
+
+function hideOrderForm() {
+  orderForm.style.display = 'none';
+  orderForm.setAttribute('tabindex', '-1');
+}
+
+hideOrderForm();
 
 
 
 
 
-/**for (let i = 0; i < fantasyBabyMonsters.length; i++) {
+
+/**Skrev ut alla produkter på sidan (i HTML) och fixade funktioner för plus och minus,
+ * samt unika ID:n för alla knappar. 
+ * 
+ * for (let i = 0; i < fantasyBabyMonsters.length; i++) {
   console.log(i); 
   const monster = fantasyBabyMonsters[i];
   const imageSource = monster.image.src;
@@ -252,3 +316,47 @@ function increaseAmount(e) {
 
 
 
+/**Tränade på att sortera i olika kategorier:
+ * 
+ * fantasyBabyMonsters.sort((a, b) => a.price - b.price);
+
+fantasyBabyMonsters.sort((prod1, prod2) => prod1.name > prod2.name);
+console.table(fantasyBabyMonsters);
+
+const categorySlimy = fantasyBabyMonsters.filter(monster => monster.category === 'Slimy')
+console.table(categorySlimy);*/
+
+/**
+ * Detta skapar plus och minus funktioner för knapparna till produkterna samt 
+ * räknar ut totalsumman av de produkterna man valt
+ * 
+const minus = document.querySelector('#subtract');
+const plus = document.querySelector('#add');
+const currentNumber = document.querySelector('#currentNumber');
+const price = document.querySelector('#price');
+let totalAmount = Number(currentNumber.value);
+
+minus.addEventListener('click', subtract);
+
+function subtract() {
+    currentNumber.value = Math.max(0, Number(currentNumber.value) - 1);
+    totalAmount = Number(currentNumber.value);
+    updatePrice();
+}
+
+plus.addEventListener('click', add);
+
+function add() {
+    currentNumber.value = Number(currentNumber.value) + 1;
+    totalAmount = Number(currentNumber.value); 
+    updatePrice();
+}
+
+function updatePrice() {
+    price.textContent = totalAmount * 15;
+}
+
+
+
+
+**/
