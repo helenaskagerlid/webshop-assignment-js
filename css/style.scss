@@ -2,3 +2,7 @@
 @import 'fonts&colors';
 @import 'mobile';
 
+@media (min-width: 1000px) {
+    @import 'desktop';
+}
+

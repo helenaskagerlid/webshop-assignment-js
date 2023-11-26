@@ -6,15 +6,52 @@ body {
     background-color: $semi-transparent-green;
 }
 
-h1 {
-    font-family: 'bitter';
-    font-weight: 600;
-    font-size: 10vh;
+header {
+    background-color: rgb(146, 159, 134);
+    text-align: center;
+    border-bottom: 5px solid $black-color;
+
+    h1 {
+        font-family: 'bitter';
+        font-weight: 600;
+    }
+
+    #cartButton {
+        background-color: transparent;
+        border-style: none;
+        position: relative;
+        display: inline-block;
+        text-align: end;
+
+        &:hover {
+            cursor: pointer;
+        }
+        
+    }
+
+    #cartItemCount {
+        position: absolute;
+        top: -10px;
+        left: 25px;
+        background-color: white;
+        border-radius: 50%;
+        padding: 0.3em 0.6em 0.3em 0.6em;
+        font-size: 0.8rem;
+        margin-bottom: 10px;
+        
+
+    }
 }
 
-h2, h3 {
+
+
+h2, h3, label {
     font-family: 'bitter';
     font-weight: 600;
+}
+
+#sortingDropdown {
+    font-family: 'Open Sans';
 }
 
 
