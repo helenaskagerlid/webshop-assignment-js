@@ -1,66 +1,20 @@
-
-
+import fantasyMonsters from "./productsarray.mjs";
 
 // DETTA FIXAR SÅ ATT NÄR MAN KLICKAR PÅ DEN LILLA VARUKORGSIKONEN BLIR MAN SKICKAD 
 // TILL VARUKORGSSAMMANFATTNINGEN
 
 const cartButton = document.querySelector('#cartButton');
 const cartContainer = document.querySelector('#shoppingCartSummary')
+const invoiceOption = document.querySelector('#invoice');
+const radioInvoiceOption =document.querySelector('#invoiceOption')
+const cardOption = document.querySelector('#card');
+let selectedPaymentOption = 'invoice';
 
 cartButton.addEventListener('click', function() {
-  cartContainer.scrollIntoView();
+  cartContainer.scrollIntoView({behavior: 'smooth'});
 });
 
 /** MINA PRODUKTER INLAGDA I EN OBJEKT-ARRAY MED OLIKA KATEGORIER*/
-
-const fantasyBabyMonsters = [
-  {
-      name: 'Ulla brown hairy turtle',
-      productNo: 'Product-1',
-      price: 888,
-      category: 'Hairy',
-      rating: 5,
-      amount: 0,
-      image: {
-          src: 'assets/fantasy-monster-plushie-brown-hairy-turtle.jpg',
-          alt: 'a fantasy plushie that looks like a brown little baby turtle with brown long fur',
-          width: '500px',
-          height: 'auto',
-          loading: 'lazy'
-      }
-  },
-  {
-      name: 'Britta Baby snail',
-      productNo: 'Product-2',
-      price: 555,
-      category: 'Slimy',
-      rating: 4.8,
-      amount: 0,
-      image: {
-          src: 'assets/fantasy-monster-plushie-happy-snail.jpg',
-          alt: 'a fantasy monster plushie that looks like a light blue snail that is cute and happy',
-          width: '500px',
-          height: 'auto',
-          loading: 'lazy'
-      }
-  },
-  {
-      name: 'Amy Baby spider',
-      productNo: 'Product-3',
-      price: 777,
-      category: 'Hairy',
-      rating: 4.7,
-      amount: 0,
-      image: {
-          src: 'assets/fantasy-monster-plushie-baby-spider.jpg',
-          alt: 'a fantasy monster plushie that looks like a hairy baby spider',
-          width: '500px',
-          height: 'auto',
-          loading: 'lazy'
-      }
-      
-  },
-]
 
 let productsSorted = false; 
 
@@ -68,7 +22,7 @@ let productsSorted = false;
 
 const sortingDropdown = document.querySelector('#sortingDropdown');
 const productContainer = document.querySelector('#productList');
-let sortedMonsters = [...fantasyBabyMonsters];
+let sortedMonsters = [...fantasyMonsters];
 
 function sortProductList() {
 
@@ -80,6 +34,8 @@ function sortProductList() {
     sortedMonsters.sort((prod1, prod2) => prod1.name.localeCompare(prod2.name));
   } else if (selectedOption === 'Category') {
     sortedMonsters.sort((prod1, prod2) => prod1.category.localeCompare(prod2.category));
+  } else if (selectedOption === 'Rating') {
+    sortedMonsters.sort((b, a) => b.rating - a.rating);
   }
 
   productsSorted = true; 
@@ -99,11 +55,13 @@ function updateCartItemCount() {
   const cartItemCountSpan = document.querySelector('#cartItemCount');
   let totalAmount = 0;
 
-  fantasyBabyMonsters.forEach(monster => {
+  fantasyMonsters.forEach(monster => {
     totalAmount += monster.amount;
   });
 
   cartItemCountSpan.textContent = totalAmount;
+  
+  activateOrderButton();
 }
 
 updateCartItemCount();
@@ -116,7 +74,7 @@ function printBabyMonsters(monsters) {
     monsters = sortedMonsters;
   }
   else if (monsters == undefined) {
-    monsters = fantasyBabyMonsters;
+    monsters = fantasyMonsters;
   }
   productList.innerHTML = '';
   monsters.forEach((monster, i) => {
@@ -152,33 +110,28 @@ function printBabyMonsters(monsters) {
 
 function decreaseAmount(e) {
   //const index = e.currentTarget.dataset.id;
-  const index = fantasyBabyMonsters.findIndex(item => item.productNo == e.currentTarget.dataset.id);
+  const index = fantasyMonsters.findIndex(item => item.productNo == e.currentTarget.dataset.id);
   console.log(e.currentTarget.dataset.id);
 
-  if (fantasyBabyMonsters[index].amount <= 0) {
-    fantasyBabyMonsters[index].amount = 0;
+  if (fantasyMonsters[index].amount <= 0) {
+    fantasyMonsters[index].amount = 0;
   } else {
-    fantasyBabyMonsters[index].amount--;
+    fantasyMonsters[index].amount--;
   }
  
   printBabyMonsters();
 }
 
 function increaseAmount(e) {
-  //const index = e.currentTarget.dataset.id;
-  const index = fantasyBabyMonsters.findIndex(item => item.productNo == e.currentTarget.dataset.id);
-  fantasyBabyMonsters[index].amount++;
+  const index = fantasyMonsters.findIndex(item => item.productNo == e.currentTarget.dataset.id);
+  fantasyMonsters[index].amount++;
   printBabyMonsters();
   updateCart();
 }
 
-
-
 cartButton.addEventListener('click', function() {
   shoppingCartSummary.scrollIntoView({ behavior: 'smooth' });
 });
-
-
 
 printBabyMonsters();
 
@@ -195,20 +148,43 @@ function activatePlusMinusButtons() {
   })
 }
 
-
 /**DETTA PRINTAR UT PRODUKTERNA I VARUKORGSAMMANFATTNINGEN */
 
 function printCartMonsters() {
+  const today = new Date();
+  const itsFriday = today.getDay() === 5;
+  const itsMonday = today.getDay() === 1;
+  const currentHour = today.getHours();
+
   cartContainer.innerHTML = '';
 
   let totalAmount = 0;
   let totalPrice = 0;
+  let message = '';
 
-  fantasyBabyMonsters.forEach(monster => {
+
+  fantasyMonsters.forEach(monster => {
     if (monster.amount > 0) {
 
       totalAmount += monster.amount;
-      totalPrice += monster.amount * monster.price;
+
+      let currentMonsterPrice = monster.amount * monster.price;
+
+      if (monster.amount >= 10) {
+        currentMonsterPrice *= 0.9; 
+        message += `Congratulations! You get a 10% discount on ${monster.name} because you've ordered 10 or more!`;
+      }
+
+      if (itsMonday && currentHour >=3 && currentHour <=10) {
+        currentMonsterPrice *= 0.9;
+        message = "Hurray, It's Monday morning! You get 10% off!";
+      }
+
+      if ((itsFriday && currentHour >14)) {
+        currentMonsterPrice *=1.5;
+      }
+
+      totalPrice += currentMonsterPrice;
 
       cartContainer.innerHTML += `
         <article>
@@ -218,15 +194,45 @@ function printCartMonsters() {
     }
   });
 
+  let shippingCost = 25 + Math.round(0.1 * totalPrice); 
+  totalPrice = Math.round(totalPrice);
+  shippingCost = Math.round(shippingCost);
+
+  if (totalAmount > 15) {
+    shippingCost = 0; 
+    message += "Congratulations! You get free shipping because you've ordered more than 15 monsters!";
+  } else {
+    shippingCost += Math.round(0.1 * totalPrice);
+  }
+
+  // Lägg till fraktkostnaden i det totala priset
+  totalPrice += shippingCost;
+
+  if (totalPrice > 800) {
+    radioInvoiceOption.disabled = true;
+  } else {
+    radioInvoiceOption.disabled = false;
+  }
 
   cartContainer.innerHTML = `<h3>Shopping Cart Summary</h3>${cartContainer.innerHTML}`;
 
-  cartContainer.innerHTML += `
+  if (totalAmount > 0) {
+    cartContainer.innerHTML += `
     <p>Total amount: ${totalAmount} st</p>
     <p>Total price: ${totalPrice} kr</p>
+    <p>${message}</p>
+    <p>Shipping cost: ${shippingCost} kr</p>
     <button id="orderButton">Beställ</button>
   `;
+  } else {
+    cartContainer.innerHTML += `
+      <p>Your shopping cart is empty</p>
+    `;
+  }
+  
 }
+
+printCartMonsters();
 
 /**DETTA GÖR ATT FÄRGEN ÄNDRAS NÄR NÅGOT LÄGGS I VARUKORGEN  */
 function updateCart() {
@@ -237,39 +243,129 @@ function updateCart() {
   setTimeout(() => {
     cartContainer.classList.remove('updated-cart');
   }, 1000);
+
 }
 
-/**DETTA DÖLJER ORDERFORM OCH VISAR DET NÄR ANVÄNDAREN KLICKAR PÅ BESTÄLL */
+// FUNKTION SOM GÖR ATT KLASSEN ACTIVE ADDERAS
 
-const orderForm = document.querySelector('#orderForm');
-const orderButton = document.querySelector('#orderButton');
+function showOrderForm() {
+    orderFormSection.classList.add('active');
+}
 
-hideOrderForm();
+// FUNKTION SOM AKTIVERAR ORDERBUTTON OCH NEDAN FIXAR SÅ ATT ORDERFORM SYNS NÄR KNAPPEN KLICKAS
 
-orderButton.addEventListener('click', () => {
+function activateOrderButton() {
+  const showOrderFormBtn = document.querySelector('#orderButton');
+  showOrderFormBtn.addEventListener('click', showOrderForm);
+}
 
-  orderForm.style.display = 'block';
-  orderForm.removeAttribute('tabindex');
+const showOrderFormBtn = document.querySelector('#orderButton');
+
+showOrderFormBtn.addEventListener('click', function() {
+  orderForm.scrollIntoView({ behavior: 'smooth' });
 });
 
-function hideOrderForm() {
-  orderForm.style.display = 'none';
-  orderForm.setAttribute('tabindex', '-1');
+// FUNKTION SOM FOKUSERAR PÅ ATT MAN SKA KUNNA TOGGLA MELLAN CARD OCH INVOICE
+
+const cardInvoiceRadios = Array.from(document.querySelectorAll('input[name="payment-option"]'));
+
+cardInvoiceRadios.forEach(radioBtn => {
+  radioBtn.addEventListener('change', switchPaymentMethod)
+})
+
+function switchPaymentMethod(e) {
+  cardOption.classList.toggle('hidden');
+  invoiceOption.classList.toggle('hidden');
+
+  selectedPaymentOption = e.target.value;
+  
 }
 
-hideOrderForm();
+//DETTA GÖR SÅ ATT FORM INTE KAN SKICKAS OM INTE ALLA FÄLT ÄR RÄTT IFYLLDA
+
+const identityNumber = document.querySelector('#identityNumber');
+
+identityNumber.addEventListener('change', activateFinalOrderButton);
+  
+identityNumber.addEventListener('change', isPersonalIdValid);
+
+function activateFinalOrderButton() {
+  const finalOrderButton = document.querySelector('#finalOrderButton');
+  const firstName = document.querySelector('#firstname').value;
+  const lastName = document.querySelector('#lastname').value;
+  const streetName = document.querySelector('#streetname').value;
+  const postCode = document.querySelector('#postCode').value;
+  const city = document.querySelector('#city').value;
+  const mobile = document.querySelector('#mobile').value;
+  const email = document.querySelector('#email').value;
+
+
+  if (
+    firstName &&
+    lastName &&
+    streetName &&
+    postCode &&
+    city &&
+    mobile &&
+    email &&
+    isPersonalIdValid
+    ) {
+      finalOrderButton.removeAttribute('disabled');
+    } else {
+      finalOrderButton.setAttribute('disabled', 'disabled');
+    }
+
+    isPersonalIdValid();
+  }
+
+  activateFinalOrderButton();
+
+  function isPersonalIdValid() {
+    const personalIdRegEx = /^(\d{10}|\d{12}|\d{6}-\d{4}|\d{8}-\d{4}|\d{8} \d{4}|\d{6} \d{4})/;
+    return personalIdRegEx.test(identityNumber.value);
+  }
+
+// DETTA GÖR SÅ ATT FÄLTET RENSAS NÄR MAN KLICKAR PÅ RENSAKNAPPEN
+
+const clearFormButton = document.querySelector('#clearFormButton');
+
+clearFormButton.addEventListener('click', function () {
+
+  const form = document.querySelector('#orderForm');
+  form.reset();
+
+  fantasyMonsters.forEach(monster => {
+    monster.amount = 0;
+  });
+
+  printCartMonsters();
+  updateCartItemCount();
+  activateOrderButton();
+});
 
 
 
-
+/* 
+ function activateFinalOrderButton() {
+  if (selectedPaymentOption === 'invoice' && isPersonalIdValid()) {
+    finalOrderButton.removeAttribute('disable');
+    } else if (selectedPaymentOption === 'invoice' && !isPersonalIdValid()) {
+    console.log('inaktivera');
+  }
+  } 
+  
+/**DETTA DÖLJER ORDERFORM OCH VISAR DET NÄR ANVÄNDAREN KLICKAR PÅ BESTÄLL */
+/**const orderFormSection = document.querySelector('#orderFormSection');
+ 
+showOrderFormBtn.addEventListener('click', showOrderForm)**/
 
 
 /**Skrev ut alla produkter på sidan (i HTML) och fixade funktioner för plus och minus,
  * samt unika ID:n för alla knappar. 
  * 
- * for (let i = 0; i < fantasyBabyMonsters.length; i++) {
+ * for (let i = 0; i < fantasyMonsters.length; i++) {
   console.log(i); 
-  const monster = fantasyBabyMonsters[i];
+  const monster = fantasyMonsters[i];
   const imageSource = monster.image.src;
   const imageAltText = monster.image.alt;
   productContainer.innerHTML +=
@@ -281,8 +377,8 @@ hideOrderForm();
       <p>Rating: ${monster.rating}</p>
       <div class="amountContainer">
           <button class="subtract" id="subtract-${i}">-</button>
-          Amount: ${fantasyBabyMonsters[i].amount}
-          Price: ${fantasyBabyMonsters[i].price} kr
+          Amount: ${fantasyMonsters[i].amount}
+          Price: ${fantasyMonsters[i].price} kr
           <button class="add" id="add-${i}">+</button>
       </div>
   </section>`;
@@ -297,8 +393,8 @@ for (let i = 0; i < decreaseButtons.length; i++) {
 
 function decreaseAmount(e) {
   const index = e.target.id.replace('subtract-', '');
-  console.log(fantasyBabyMonsters[index]);
-  fantasyBabyMonsters[index].amount -= 1;
+  console.log(fantasyMonsters[index]);
+  fantasyMonsters[index].amount -= 1;
 }
 
 const increaseButtons = Array.from(document.querySelectorAll('.add'))
@@ -309,7 +405,7 @@ for (let i = 0; i < increaseButtons.length; i++) {
 
 function increaseAmount(e) {
   const index = e.target.id.replace('add-', '');
-  console.log(fantasyBabyMonsters[index]);
+  console.log(fantasyMonsters[index]);
 } **/
 
 
@@ -318,12 +414,12 @@ function increaseAmount(e) {
 
 /**Tränade på att sortera i olika kategorier:
  * 
- * fantasyBabyMonsters.sort((a, b) => a.price - b.price);
+ * fantasyMonsters.sort((a, b) => a.price - b.price);
 
-fantasyBabyMonsters.sort((prod1, prod2) => prod1.name > prod2.name);
-console.table(fantasyBabyMonsters);
+fantasyMonsters.sort((prod1, prod2) => prod1.name > prod2.name);
+console.table(fantasyMonsters);
 
-const categorySlimy = fantasyBabyMonsters.filter(monster => monster.category === 'Slimy')
+const categorySlimy = fantasyMonsters.filter(monster => monster.category === 'Slimy')
 console.table(categorySlimy);*/
 
 /**
