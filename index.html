@@ -30,6 +30,7 @@
             <option value="Price">Price</option>
             <option value="Name">Name</option>
             <option value="Category">Category</option>
+            <option value="Rating">Rating</option>
           </select>
         
           <div id="productList">
@@ -47,11 +48,94 @@
           </div>
         </section>
 
-        <section id="orderForm">
+        <section id="orderFormSection">
           <h2>Order form</h2>
+          <form id="orderForm">
+            <label for="firstname">First name:</label>
+            <input type="text" id="firstname" name="firstname" required>
+
+            <label for="lastname">Last name:</label>
+            <input type="text" id="lastname" name="lastname" required>
+    
+            <label for="streetname">Street name:</label>
+            <input type="text" id="streetname" name="streetname" required>
+
+            <label for="postCode">Postcode:</label>
+            <input type="text" id="postCode" name="postCode" required>
+
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" required>
+
+            <label for="portcode">Port code</label>
+            <input type="text" id="portcode" name="portcode">
+    
+            <label for="mobile">Mobile Number:</label>
+            <input type="tel" id="mobile" name="mobile" pattern="[0-9]{10}" placeholder="e.g., 1234567890" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="payment">Payment method</label>
+
+            
+
+            <div id="payment-options">
+
+              <div class="selectors">
+                <label>
+                  <input type="radio" name="payment-option" value="invoice" id="invoiceOption">
+                  <span>Invoice</span>
+                </label>
+    
+                <label>
+                  <input type="radio" name="payment-option" value="card">
+                  <span>Card</span>
+                </label>
+              </div>
+
+              <div class="hidden" id="invoice">
+                <label>
+                  <span>Personal identity number</span>
+                  <input type="text" name="personalIdentityNumber" id="identityNumber" required>
+                </label>
+              </div>
+
+              <div id="card">
+                <label>
+                  <span>Card number</span>
+                  <input type="number" id="creditCardNumber" value="5100080000000000">
+                </label>
+                <label>
+                  <span>Date</span>
+                  <span>
+                      <input type="number" class="small" placeholder="YY" id="creditCardYear">/
+                      <input type="number" class="small" placeholder="MM" id="creditCardMonth">
+                    </span>
+                </label>
+                <label>
+                  <span>CVC</span>
+                  <input type="number" placeholder="123" id="creditCardCvc">
+                </label>
+              </div>
+            </div>
+
+            <label>
+              <input type="checkbox" name="privacyPolicy" id="privacyPolicyCheckbox" required>
+              I agree to the processing of my personal data.
+            </label>
+          
+            <label>
+              <input type="checkbox" name="newsletter" id="newsletterCheckbox" checked>
+              I want to subscribe to the newsletter.
+            </label>
+
+            <button id="clearFormButton">Clear Form</button>
+            <button id="finalOrderButton" disabled>Send order</button>
+            
+        </form>
         </section>
 
     </main>
-    <script type="module" src="main.js"></script>
+    <script type="module" src="main.mjs"></script>
   </body>
 </html>
