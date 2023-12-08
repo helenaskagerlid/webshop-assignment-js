@@ -27,57 +27,68 @@
         <div id="sortingMenu">
           <label for="sortingMenuHeading">Sort Products:</label>
           <select id="sortingDropdown">
-            <option value="Price">Price</option>
-            <option value="Name">Name</option>
-            <option value="Category">Category</option>
-            <option value="Rating">Rating</option>
+            <option value="price">Price</option>
+            <option value="name">Name</option>
+            <option value="category">Category</option>
+            <option value="rating">Rating</option>
           </select>
         
           <div id="productList">
-            <h3>Baby monster stuffed animals</h3>
+            <h3>Fantasy monster stuffed animals</h3>
           </div>
         </div>
-
-        <section id="photoGallery">
-            <h2>Gallery</h2>
-        </section>
 
         <section id="shoppingCartSummary">
           <div class="shoppingCartContainer">
             <h2>Shoppingcart Summary</h2>
           </div>
         </section>
+        <button id="orderButton">Order</button>
 
         <section id="orderFormSection">
           <h2>Order form</h2>
           <form id="orderForm">
-            <label for="firstname">First name:</label>
-            <input type="text" id="firstname" name="firstname" required>
-
-            <label for="lastname">Last name:</label>
-            <input type="text" id="lastname" name="lastname" required>
-    
-            <label for="streetname">Street name:</label>
-            <input type="text" id="streetname" name="streetname" required>
-
-            <label for="postCode">Postcode:</label>
-            <input type="text" id="postCode" name="postCode" required>
-
-            <label for="city">City:</label>
-            <input type="text" id="city" name="city" required>
-
-            <label for="portcode">Port code</label>
-            <input type="text" id="portcode" name="portcode">
-    
-            <label for="mobile">Mobile Number:</label>
-            <input type="tel" id="mobile" name="mobile" pattern="[0-9]{10}" placeholder="e.g., 1234567890" required>
-
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-
-            <label for="payment">Payment method</label>
-
+            <label for="firstname">First name:
+              <input type="text" id="firstname" name="firstname" required>
+            </label>
+            <span id="firstnameErrorMessage" class="hideError">Not a valid name</span>
             
+            <label for="lastname">Last name:
+              <input type="text" id="lastname" name="lastname" required>
+            </label>
+            <span id="lastnameErrorMessage" class="hideError">Not a valid last name</span>
+    
+            <label for="streetname">Street name:
+              <input type="text" id="streetname" name="streetname" required>
+            </label>
+            <span id="streetnameErrorMessage" class="hideError">Not a valid street name</span>
+            
+            <label for="postCode">Postcode:
+              <input type="text" id="postCode" name="postCode" required>
+            </label>
+            <span id="postCodeErrorMessage" class="hideError">Not a valid postcode</span>
+            
+
+            <label for="city">City:
+              <input type="text" id="city" name="city" required>
+            </label>
+            <span id="cityErrorMessage" class="hideError">Not a valid City name</span>
+
+            <label for="portcode">Port code
+              <input type="text" id="portcode" name="portcode">
+            </label>
+            
+            <label for="mobile">Mobile Number:
+              <input type="tel" id="mobile" name="mobile" pattern="[0-9]{10}" placeholder="e.g., 1234567890" required>
+            </label>
+            <span id="mobileErrorMessage" class="hideError">Not a valid mobile number</span>
+            
+            <label for="email">Email:
+              <input type="email" id="email" name="email" required>
+            </label>
+            <span id="emailErrorMessage" class="hideError">Not a valid email adress</span>
+            
+            <label for="payment">Payment method</label>
 
             <div id="payment-options">
 
@@ -93,12 +104,13 @@
                 </label>
               </div>
 
-              <div class="hidden" id="invoice">
+              <div class="hide" id="invoice">
                 <label>
                   <span>Personal identity number</span>
                   <input type="text" name="personalIdentityNumber" id="identityNumber" required>
                 </label>
               </div>
+              <span id="personalIdErrorMessage" class="hideError">Not a valid identity number</span>
 
               <div id="card">
                 <label>
@@ -130,11 +142,10 @@
             </label>
 
             <button id="clearFormButton">Clear Form</button>
-            <button id="finalOrderButton" disabled>Send order</button>
+            <button id="finalOrderButton" type="submit" disabled>Send order</button>
             
         </form>
         </section>
-
     </main>
     <script type="module" src="main.mjs"></script>
   </body>
