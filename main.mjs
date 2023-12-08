@@ -1,20 +1,20 @@
 import fantasyMonsters from "./productsarray.mjs";
 
-// DETTA FIXAR SÅ ATT NÄR MAN KLICKAR PÅ DEN LILLA VARUKORGSIKONEN BLIR MAN SKICKAD 
-// TILL VARUKORGSSAMMANFATTNINGEN
 
 const cartButton = document.querySelector('#cartButton');
-const cartContainer = document.querySelector('#shoppingCartSummary')
+const cartContainer = document.querySelector('#shoppingCartSummary');
 const invoiceOption = document.querySelector('#invoice');
-const radioInvoiceOption =document.querySelector('#invoiceOption')
+const radioInvoiceOption =document.querySelector('#invoiceOption');
 const cardOption = document.querySelector('#card');
-let selectedPaymentOption = 'invoice';
+let selectedPaymentOption = ('invoice');
+
+
+// DETTA FIXAR SÅ ATT NÄR MAN KLICKAR PÅ DEN LILLA VARUKORGSIKONEN BLIR MAN SKICKAD 
+// TILL VARUKORGSSAMMANFATTNINGEN
 
 cartButton.addEventListener('click', function() {
   cartContainer.scrollIntoView({behavior: 'smooth'});
 });
-
-/** MINA PRODUKTER INLAGDA I EN OBJEKT-ARRAY MED OLIKA KATEGORIER*/
 
 let productsSorted = false; 
 
@@ -40,15 +40,12 @@ function sortProductList() {
 
   productsSorted = true; 
 
-  // Uppdatera produktlistan efter sortering
   printBabyMonsters(sortedMonsters);
 
 }
 
 sortingDropdown.addEventListener('change', sortProductList);
 
-// Uppdatera produktlistan vid sidans laddning
-sortProductList();
 printBabyMonsters();
 
 function updateCartItemCount() {
@@ -181,7 +178,7 @@ function printCartMonsters() {
       }
 
       if ((itsFriday && currentHour >14)) {
-        currentMonsterPrice *=1.5;
+        currentMonsterPrice *=0.5;
       }
 
       totalPrice += currentMonsterPrice;
@@ -205,7 +202,6 @@ function printCartMonsters() {
     shippingCost += Math.round(0.1 * totalPrice);
   }
 
-  // Lägg till fraktkostnaden i det totala priset
   totalPrice += shippingCost;
 
   if (totalPrice > 800) {
@@ -222,7 +218,6 @@ function printCartMonsters() {
     <p>Total price: ${totalPrice} kr</p>
     <p>${message}</p>
     <p>Shipping cost: ${shippingCost} kr</p>
-    <button id="orderButton">Beställ</button>
   `;
   } else {
     cartContainer.innerHTML += `
@@ -265,6 +260,7 @@ showOrderFormBtn.addEventListener('click', function() {
   orderForm.scrollIntoView({ behavior: 'smooth' });
 });
 
+
 // FUNKTION SOM FOKUSERAR PÅ ATT MAN SKA KUNNA TOGGLA MELLAN CARD OCH INVOICE
 
 const cardInvoiceRadios = Array.from(document.querySelectorAll('input[name="payment-option"]'));
@@ -274,14 +270,217 @@ cardInvoiceRadios.forEach(radioBtn => {
 })
 
 function switchPaymentMethod(e) {
-  cardOption.classList.toggle('hidden');
-  invoiceOption.classList.toggle('hidden');
+  cardOption.classList.toggle('hide');
+  invoiceOption.classList.toggle('hide');
 
   selectedPaymentOption = e.target.value;
   
 }
 
-//DETTA GÖR SÅ ATT FORM INTE KAN SKICKAS OM INTE ALLA FÄLT ÄR RÄTT IFYLLDA
+//DETTA SKA GÖRA SÅ ATT FORM INTE KAN SKICKAS OM INTE ALLA FÄLT ÄR RÄTT IFYLLDA SAMT SKA "POPPA UPP" ETT
+//FELMEDDELANDE 
+
+const finalOrderButton = document.querySelector('#finalOrderButton');
+const firstName = document.querySelector('#firstname');
+const firstNameError = document.querySelector('#firstnameErrorMessage');
+const firstNameRegEx = /^[A-Za-z]+$/;
+
+firstName.addEventListener('blur', isFirstnameValid);
+
+function isFirstnameValid() {
+  const firstNameRegExResult = firstNameRegEx.exec(firstName.value);
+if (firstNameRegExResult == null) {
+  firstNameError.classList.remove('hideError');
+  return false;
+} else {
+  firstNameError.classList.add('hideError');
+  return true;
+ }
+}
+
+const lastName = document.querySelector('#lastname');
+const lastNameError = document.querySelector('#lastnameErrorMessage');
+const lastNameRegEx = /^[A-Za-z]+$/;
+
+lastName.addEventListener('blur', isLastnameValid);
+
+function isLastnameValid() {
+  const lastNameRegExResult = lastNameRegEx.exec(lastName.value);
+  console.log(lastNameRegExResult);
+if (lastNameRegExResult == null) {
+  lastNameError.classList.remove('hideError');
+  return false;
+} else {
+  lastNameError.classList.add('hideError');
+  return true; 
+ }
+}
+
+
+const streetname = document.querySelector('#streetname');
+const streetnameError = document.querySelector('#streetnameErrorMessage');
+const streetnameRegEx = (/^[a-zA-ZåäöÅÄÖ\s.,-]+ \d+$/);
+
+streetname.addEventListener('blur', isStreetnameValid);
+
+function isStreetnameValid() {
+  const streetnameRegExResult = streetnameRegEx.exec(streetname.value);
+if (streetnameRegExResult == null) {
+  streetnameError.classList.remove('hideError');
+  return false;
+} else {
+  streetnameError.classList.add('hideError');
+  return true;
+ }
+}
+
+
+const postCode = document.querySelector('#postCode');
+const postCodeError = document.querySelector('#postCodeErrorMessage');
+const postCodeRegEx = /^\d{5}$/;
+
+postCode.addEventListener('blur', isPostCodeValid);
+
+function isPostCodeValid() {
+  const postCodeRegExResult = postCodeRegEx.exec(postCode.value);
+if (postCodeRegExResult == null) {
+  postCodeError.classList.remove('hideError');
+  return false;
+} else {
+  postCodeError.classList.add('hideError');
+  return true;
+ }
+}
+
+
+const city = document.querySelector('#city');
+const cityError = document.querySelector('#cityErrorMessage');
+const cityRegEx = /^[A-Za-z]+$/;
+
+city.addEventListener('blur', isCitynameValid);
+
+function isCitynameValid() {
+  const cityRegExResult = cityRegEx.exec(city.value);
+if (cityRegExResult == null) {
+  cityError.classList.remove('hideError');
+  return false;
+} else {
+  cityError.classList.add('hideError');
+  return true;
+ }
+}
+
+
+const mobileNumber = document.querySelector('#mobile');
+const mobileError = document.querySelector('#mobileErrorMessage');
+const mobileRegEx = /^[0-9]{7,15}$/;
+
+mobile.addEventListener('blur', isMobileNumberValid);
+
+function isMobileNumberValid() {
+  const mobileRegExResult = mobileRegEx.exec(mobileNumber.value);
+if (mobileRegExResult == null) {
+  mobileError.classList.remove('hideError');
+  return false;
+} else {
+  mobileError.classList.add('hideError');
+  return true;
+ }
+}
+
+
+const email = document.querySelector('#email');
+const emailError = document.querySelector('#emailErrorMessage');
+const emailRegEx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+email.addEventListener('blur', isEmailValid);
+
+function isEmailValid() {
+  const emailRegExResult = emailRegEx.exec(email.value);
+if (emailRegExResult == null) {
+  emailError.classList.remove('hideError');
+  return false;
+} else {
+  emailError.classList.add('hideError');
+  return true;
+ }
+}
+
+
+const personalId = document.querySelector('#identityNumber');
+const personalIdRegEx = /^(\d{10}|\d{12}|\d{6}-\d{4}|\d{8}-\d{4}|\d{8} \d{4}|\d{6} \d{4})/;
+
+personalId.addEventListener('blur', isPersonalIdValid);
+
+function isPersonalIdValid() {
+  const personalIdRegExResult = personalIdRegEx.exec(personalId.value);
+  if (personalIdRegExResult == null) {
+    personalIdErrorMessage.classList.remove('hideError');
+    return false;
+  } else {
+    personalIdErrorMessage.classList.add('hideError');
+    return true; 
+   }
+  }
+
+  // FUNKTION SOM CHECKAR ATT ALLA FUNKTIONER HAR VÄRDET TRUE INNAN FINALORDERBUTTON KAN AKTIVERAS
+
+  const privacyPolicyCheckbox = document.querySelector('#privacyPolicyCheckbox');
+
+  function activateFinalOrderButton() {
+    if (
+      isFirstnameValid() &&
+      isLastnameValid() &&
+      isStreetnameValid() &&
+      isPostCodeValid() &&
+      isCitynameValid() &&
+      isMobileNumberValid() &&
+      isEmailValid() &&
+      isPersonalIdValid() &&
+      privacyPolicyCheckbox.checked
+    ) {
+      finalOrderButton.removeAttribute('disabled');
+    } else {
+      finalOrderButton.setAttribute('disabled', 'disabled');
+    }
+  }
+
+  firstName.addEventListener('blur', activateFinalOrderButton);
+  lastName.addEventListener('blur', activateFinalOrderButton);
+  streetname.addEventListener('blur', activateFinalOrderButton);
+  postCode.addEventListener('blur', activateFinalOrderButton);
+  city.addEventListener('blur', activateFinalOrderButton);
+  mobileNumber.addEventListener('blur', activateFinalOrderButton);
+  email.addEventListener('blur', activateFinalOrderButton);
+  personalId.addEventListener('blur', activateFinalOrderButton);
+
+
+// DETTA GÖR SÅ ATT FÄLTET RENSAS NÄR MAN KLICKAR PÅ RENSAKNAPPEN
+
+const clearFormButton = document.querySelector('#clearFormButton');
+
+clearFormButton.addEventListener('click', clearForm) 
+
+  function clearForm() {
+
+  const form = document.querySelector('#orderForm');
+  form.reset();
+
+  fantasyMonsters.forEach(monster => {
+    monster.amount = 0;
+  });
+
+  printCartMonsters();
+  updateCartItemCount();
+  activateOrderButton();
+};
+
+
+
+/* 
+
+finalOrderButton.setAttribute('disabled', 'disabled');
+  finalOrderButton.removeAttribute('disabled');
 
 const identityNumber = document.querySelector('#identityNumber');
 
@@ -289,8 +488,10 @@ identityNumber.addEventListener('change', activateFinalOrderButton);
   
 identityNumber.addEventListener('change', isPersonalIdValid);
 
+firstName.addEventListener('input', activateFinalOrderButton);
+
 function activateFinalOrderButton() {
-  const finalOrderButton = document.querySelector('#finalOrderButton');
+  
   const firstName = document.querySelector('#firstname').value;
   const lastName = document.querySelector('#lastname').value;
   const streetName = document.querySelector('#streetname').value;
@@ -307,41 +508,46 @@ function activateFinalOrderButton() {
     postCode &&
     city &&
     mobile &&
-    email &&
-    isPersonalIdValid
+    email 
     ) {
       finalOrderButton.removeAttribute('disabled');
     } else {
       finalOrderButton.setAttribute('disabled', 'disabled');
     }
-
-    isPersonalIdValid();
+    
   }
 
   activateFinalOrderButton();
 
-  function isPersonalIdValid() {
-    const personalIdRegEx = /^(\d{10}|\d{12}|\d{6}-\d{4}|\d{8}-\d{4}|\d{8} \d{4}|\d{6} \d{4})/;
-    return personalIdRegEx.test(identityNumber.value);
+  
+  const firstNameRegEx = /^[A-Za-z]+$/;
+  firstName.addEventListener('change', isFirstNameValid)
+
+  function isFirstNameValid() {
+    const result = firstNameRegEx.exec(firstName.value);
+    if (result === null) {
+    return;
+    }
+    activateFinalOrderButton();
   }
 
-// DETTA GÖR SÅ ATT FÄLTET RENSAS NÄR MAN KLICKAR PÅ RENSAKNAPPEN
-
-const clearFormButton = document.querySelector('#clearFormButton');
-
-clearFormButton.addEventListener('click', function () {
-
-  const form = document.querySelector('#orderForm');
-  form.reset();
-
-  fantasyMonsters.forEach(monster => {
-    monster.amount = 0;
-  });
-
-  printCartMonsters();
-  updateCartItemCount();
-  activateOrderButton();
-});
+  /** 
+  function isFirstNameValid() {
+    const firstNameRegEx = /^[A-Za-z]+$/;
+    const firstNameInput = document.getElementById("firstname");
+    const firstNameErrorMessage = document.querySelector(".firstnameErrorMessage");
+  
+    if (firstNameRegEx.test(firstNameInput.value)) {
+      firstNameErrorMessage.textContent = "Not valid first name";
+      console.log("Validation Failed");
+      return false;
+    } else {
+      firstNameErrorMessage.textContent = "";
+      console.log("Validation Passed");
+      return true;
+    }
+  }
+*/
 
 
 
