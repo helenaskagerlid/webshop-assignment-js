@@ -10,7 +10,7 @@ const fantasyBabyMonsters = [
         image: {
             src: 'assets/fantasy-monster-plushie-brown-hairy-turtle.jpg',
             alt: 'a fantasy plushie that looks like a brown little baby turtle with brown long fur',
-            width: '500px',
+            width: '500',
             height: 'auto',
             loading: 'lazy'
         }
@@ -25,7 +25,7 @@ const fantasyBabyMonsters = [
         image: {
             src: 'assets/fantasy-monster-plushie-happy-snail.jpg',
             alt: 'a fantasy monster plushie that looks like a light blue snail that is cute and happy',
-            width: '500px',
+            width: '500',
             height: 'auto',
             loading: 'lazy'
         }
@@ -40,7 +40,7 @@ const fantasyBabyMonsters = [
         image: {
             src: 'assets/fantasy-monster-plushie-baby-spider.jpg',
             alt: 'a fantasy monster plushie that looks like a hairy baby spider',
-            width: '500px',
+            width: '500',
             height: 'auto',
             loading: 'lazy'
         }
