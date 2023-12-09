@@ -8,13 +8,29 @@ const radioInvoiceOption =document.querySelector('#invoiceOption');
 const cardOption = document.querySelector('#card');
 let selectedPaymentOption = document.querySelector('#invoice');
 
+// FUNKTION SOM GÖR ATT MAN KAN SKIFTA MELLAN MÖRKT OCH LJUST TEMA
+
+const darkThemeButton = document.querySelector('#darkThemeButton');
+
+darkThemeButton.addEventListener('click', themeToggle);
+
+function themeToggle() {
+  if (document.body.classList.contains('darkMode')) {
+    document.body.classList.remove('darkMode');
+  } else {
+    document.body.classList.add('darkMode');
+  }
+}
+
 
 // DETTA FIXAR SÅ ATT NÄR MAN KLICKAR PÅ DEN LILLA VARUKORGSIKONEN BLIR MAN SKICKAD 
 // TILL VARUKORGSSAMMANFATTNINGEN
 
-cartButton.addEventListener('click', function() {
+cartButton.addEventListener('click', scrollToCart); 
+
+function scrollToCart() {
   cartContainer.scrollIntoView({behavior: 'smooth'});
-});
+};
 
 let productsSorted = false; 
 
@@ -23,9 +39,6 @@ let productsSorted = false;
 const sortingDropdown = document.querySelector('#sortingDropdown');
 const productContainer = document.querySelector('#productList');
 let sortedMonsters = [...fantasyMonsters];
-/*
-const priceSorting = document.querySelector('#priceSorting');
-priceSorting.addEventListener('click', sortProductList); */
 
 function sortProductList() {
 
@@ -109,7 +122,6 @@ function printBabyMonsters(monsters) {
  */
 
 function decreaseAmount(e) {
-  //const index = e.currentTarget.dataset.id;
   const index = fantasyMonsters.findIndex(item => item.productNo == e.currentTarget.dataset.id);
   console.log(e.currentTarget.dataset.id);
 
@@ -148,7 +160,9 @@ function activatePlusMinusButtons() {
   })
 }
 
-/**DETTA PRINTAR UT PRODUKTERNA I VARUKORGSAMMANFATTNINGEN */
+/**DETTA PRINTAR UT PRODUKTERNA I VARUKORGSAMMANFATTNINGEN OCH CHECKAR AV OM DET SKA LÄGGAS TILL RABATTAR/PÅSLAG
+ * OCH ISF LÄGGER TILL DEM
+*/
 
 function printCartMonsters() {
   const today = new Date();
@@ -181,14 +195,21 @@ function printCartMonsters() {
       }
 
       if ((itsFriday && currentHour >14)) {
-        currentMonsterPrice *=0.5;
+        currentMonsterPrice *=1.5;
       }
 
       totalPrice += currentMonsterPrice;
 
       cartContainer.innerHTML += `
-        <article>
-          <span>${monster.name}</span> <span>${monster.amount} st</span>
+        <article style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+        <img style="margin-right: 2.5vw" src="${monster.image.src}" 
+        alt="${monster.image.alt}" 
+        width="60px" 
+        height="60px" 
+        loading="${monster.image.loading}">
+        <div style="text-align: center;">
+        <span style="margin-left: 2vw font-size: 0.4rem">${monster.name}</span> <span style="margin-left: 5vw">${monster.amount} st</span>
+        </div>
         </article>
       `;
     }
@@ -217,15 +238,18 @@ function printCartMonsters() {
 
   if (totalAmount > 0) {
     cartContainer.innerHTML += `
-    <p>Total amount: ${totalAmount} st</p>
-    <p>Total price: ${totalPrice} kr</p>
+    <p style="font-weight: bold">Total amount: ${totalAmount} st</p>
+    <p style="font-weight: bold">Total price: ${totalPrice} kr</p>
     <p>${message}</p>
     <p>Shipping cost: ${shippingCost} kr</p>
   `;
+  orderButton.disabled = false;
+
   } else {
     cartContainer.innerHTML += `
       <p>Your shopping cart is empty</p>
     `;
+    orderButton.disabled = true;
   }
   
 }
@@ -281,8 +305,8 @@ function switchPaymentMethod(e) {
   
 }
 
-//DETTA SKA GÖRA SÅ ATT FORM INTE KAN SKICKAS OM INTE ALLA FÄLT ÄR RÄTT IFYLLDA SAMT SKA "POPPA UPP" ETT
-//FELMEDDELANDE 
+//DETTA CHECKAR SÅ ATT ALLA INPUT FÄLT ÄR RÄTT IFYLLDA SAMT SKA "POPPA UPP" ETT
+//FELMEDDELANDE OM DE INTE ÄR DET
 
 const finalOrderButton = document.querySelector('#finalOrderButton');
 const firstName = document.querySelector('#firstname');
@@ -427,7 +451,8 @@ function isPersonalIdValid() {
    }
   }
 
-  // FUNKTION SOM CHECKAR ATT ALLA FUNKTIONER HAR VÄRDET TRUE INNAN FINALORDERBUTTON KAN AKTIVERAS
+  // FUNKTION SOM CHECKAR ATT ALLA FUNKTIONER HAR VÄRDET TRUE (ALLTSÅ ALLA FÄLT ÄR VALIDERADE MOT REGEX)
+  // INNAN FINALORDERBUTTON KAN AKTIVERAS
 
   const privacyPolicyCheckbox = document.querySelector('#privacyPolicyCheckbox');
 
@@ -481,12 +506,32 @@ clearFormButton.addEventListener('click', clearForm)
   activateOrderButton();
 };
 
+// FUNKTION SOM VISAR ORDERMESSAGE NÄR KUNDEN KLICKAT PÅ FINALORDERBUTTON
+
 finalOrderButton.addEventListener('click', activateOrderMessage);
 const orderMessage = document.querySelector('#orderMessage');
 
 function activateOrderMessage() {
+  orderMessage.classList.remove('hideStyling');
   orderMessage.innerHTML = 'Thank you for your order! It will be delivered in 3-5 business days.';
 };
+
+// FUNKTION SOM GÖR ATT SIDAN SCROLLAR TILL ORDERMESSAGE VID KLICK PÅ FINALORDERBUTTON
+
+const orderMessageContainer = document.querySelector('#orderMessageContainer');
+finalOrderButton.addEventListener('click', scrollToOrderMessage); 
+
+function scrollToOrderMessage() {
+  orderMessageContainer.scrollIntoView({behavior: 'smooth'});
+};
+
+// FUNKTION SOM GÖMMER ORDERFORM NÄR BESTÄLLNINGEN GJORTS
+
+finalOrderButton.addEventListener('click', hideOrderForm);
+
+function hideOrderForm() {
+  orderFormSection.classList.remove('active');
+}
 
 /* 
 

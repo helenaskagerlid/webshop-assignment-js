@@ -8,15 +8,23 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@300;600&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <title>Ugly & Pawsome Webshop</title>
   </head>
   <body>
 
     <header>
       <div class="headingContainer">
+        <button id="darkThemeButton" class="darkThemeButton" aria-label="Toggle dark and light theme">
+          <span class="material-symbols-outlined darkMode">
+          dark_mode
+          </span>
+        </button>
         <h1>Ugly & Pawsome</h1>
-        <button id="cartButton"><svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 576 512">
-          <path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg> 
+        <button id="cartButton" class="cartButton" aria-label="Open shopping cart summary"><svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 576 512">
+          <path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 
+          11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 
+          0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg> 
           <span id="cartItemCount">0</span> 
        </button>
       </div>
@@ -25,8 +33,8 @@
     <main>
 
         <div id="sortingMenu">
-          <label for="sortingMenuHeading">Sort Products:</label>
-          <select id="sortingDropdown">
+          <label class="sortProducts">Sort Products:</label>
+          <select class="sortingDropdown" id="sortingDropdown" aria-label="Sort products">
             <option value="price">Price</option>
             <option value="name">Name</option>
             <option value="category">Category</option>
@@ -34,16 +42,16 @@
           </select>
         
           <div id="productList">
-            <h3>Fantasy monster stuffed animals</h3>
+            <h2>Fantasy monster stuffed animals</h2>
           </div>
         </div>
 
-        <section id="shoppingCartSummary">
+        <section class="shoppingCartSummary" id="shoppingCartSummary">
           <div class="shoppingCartContainer">
             <h2>Shoppingcart Summary</h2>
           </div>
         </section>
-        <button id="orderButton">Order</button>
+        <button id="orderButton" class="orderButton">Order</button>
 
         <section id="orderFormSection">
           <h2>Order form</h2>
@@ -51,28 +59,28 @@
             <label for="firstname">First name:
               <input type="text" id="firstname" name="firstname" required>
             </label>
-            <span id="firstnameErrorMessage" class="hideError">Not a valid name</span>
+            <span id="firstnameErrorMessage" class="hideError firstnameErrorMessage">Not a valid name</span>
             
             <label for="lastname">Last name:
               <input type="text" id="lastname" name="lastname" required>
             </label>
-            <span id="lastnameErrorMessage" class="hideError">Not a valid last name</span>
+            <span id="lastnameErrorMessage" class="hideError lastnameErrorMessage">Not a valid last name</span>
     
             <label for="streetname">Street name:
               <input type="text" id="streetname" name="streetname" required>
             </label>
-            <span id="streetnameErrorMessage" class="hideError">Not a valid street name</span>
+            <span id="streetnameErrorMessage" class="hideError streetnameErrorMessage">Not a valid street name</span>
             
             <label for="postCode">Postcode:
               <input type="text" id="postCode" name="postCode" required>
             </label>
-            <span id="postCodeErrorMessage" class="hideError">Not a valid postcode</span>
+            <span id="postCodeErrorMessage" class="hideError postCodeErrorMessage">Not a valid postcode</span>
             
 
             <label for="city">City:
               <input type="text" id="city" name="city" required>
             </label>
-            <span id="cityErrorMessage" class="hideError">Not a valid City name</span>
+            <span id="cityErrorMessage" class="hideError cityErrorMessage">Not a valid City name</span>
 
             <label for="portcode">Port code
               <input type="text" id="portcode" name="portcode">
@@ -81,14 +89,14 @@
             <label for="mobile">Mobile Number:
               <input type="tel" id="mobile" name="mobile" pattern="[0-9]{10}" placeholder="e.g., 1234567890" required>
             </label>
-            <span id="mobileErrorMessage" class="hideError">Not a valid mobile number</span>
+            <span id="mobileErrorMessage" class="hideError mobileErrorMessage">Not a valid mobile number</span>
             
             <label for="email">Email:
               <input type="email" id="email" name="email" required>
             </label>
-            <span id="emailErrorMessage" class="hideError">Not a valid email adress</span>
+            <span id="emailErrorMessage" class="hideError emailErrorMessage">Not a valid email adress</span>
             
-            <label for="payment">Payment method</label>
+            <label>Payment method</label>
 
             <div id="payment-options">
 
@@ -110,20 +118,20 @@
                   <input type="text" name="personalIdentityNumber" id="identityNumber" required>
                 </label>
               </div>
-              <span id="personalIdErrorMessage" class="hideError">Not a valid identity number</span>
+              <span id="personalIdErrorMessage" class="hideError personalIdErrorMessage">Not a valid identity number</span>
 
               <div id="card">
                 <label>
                   <span>Card number</span>
                   <input type="number" id="creditCardNumber" value="5100080000000000">
                 </label>
-                <label>
+                <div>
                   <span>Date</span>
-                  <span>
-                      <input type="number" class="small" placeholder="YY" id="creditCardYear">/
-                      <input type="number" class="small" placeholder="MM" id="creditCardMonth">
+                    <span>
+                      <label><input type="number" class="small" placeholder="YY" id="creditCardYear">/</label>
+                      <label><input type="number" class="small" placeholder="MM" id="creditCardMonth"></label>
                     </span>
-                </label>
+                  </div>
                 <label>
                   <span>CVC</span>
                   <input type="number" placeholder="123" id="creditCardCvc">
@@ -141,14 +149,14 @@
               I want to subscribe to the newsletter.
             </label>
 
-            <button id="clearFormButton">Clear Form</button>
-            <button id="finalOrderButton" type="button" disabled>Send order</button>
+            <button id="clearFormButton" class="clearFormButton">Clear Form</button>
+            <button id="finalOrderButton" class="finalOrderButton disabled" type="button" disabled>Send order</button>
             
         </form>
         </section>
 
-        <div id="orderMessageContainer">
-          <p id="orderMessage"></p>
+        <div id="orderMessageContainer" class="orderMessageContainer">
+          <p id="orderMessage" class="orderMessage hideStyling"></p>
         </div>
     </main>
     <script type="module" src="main.mjs"></script>
