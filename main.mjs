@@ -6,7 +6,7 @@ const cartContainer = document.querySelector('#shoppingCartSummary');
 const invoiceOption = document.querySelector('#invoice');
 const radioInvoiceOption =document.querySelector('#invoiceOption');
 const cardOption = document.querySelector('#card');
-let selectedPaymentOption = ('invoice');
+let selectedPaymentOption = document.querySelector('#invoice');
 
 
 // DETTA FIXAR SÅ ATT NÄR MAN KLICKAR PÅ DEN LILLA VARUKORGSIKONEN BLIR MAN SKICKAD 
@@ -23,18 +23,21 @@ let productsSorted = false;
 const sortingDropdown = document.querySelector('#sortingDropdown');
 const productContainer = document.querySelector('#productList');
 let sortedMonsters = [...fantasyMonsters];
+/*
+const priceSorting = document.querySelector('#priceSorting');
+priceSorting.addEventListener('click', sortProductList); */
 
 function sortProductList() {
 
   const selectedOption = sortingDropdown.value;
 
-  if (selectedOption === 'Price') {
+  if (selectedOption === 'price') {
     sortedMonsters.sort((a, b) => a.price - b.price);
-  } else if (selectedOption === 'Name') {
+  } else if (selectedOption === 'name') {
     sortedMonsters.sort((prod1, prod2) => prod1.name.localeCompare(prod2.name));
-  } else if (selectedOption === 'Category') {
+  } else if (selectedOption === 'category') {
     sortedMonsters.sort((prod1, prod2) => prod1.category.localeCompare(prod2.category));
-  } else if (selectedOption === 'Rating') {
+  } else if (selectedOption === 'rating') {
     sortedMonsters.sort((b, a) => b.rating - a.rating);
   }
 
@@ -42,7 +45,7 @@ function sortProductList() {
 
   printBabyMonsters(sortedMonsters);
 
-}
+};
 
 sortingDropdown.addEventListener('change', sortProductList);
 
@@ -265,8 +268,9 @@ showOrderFormBtn.addEventListener('click', function() {
 
 const cardInvoiceRadios = Array.from(document.querySelectorAll('input[name="payment-option"]'));
 
+
 cardInvoiceRadios.forEach(radioBtn => {
-  radioBtn.addEventListener('change', switchPaymentMethod)
+  radioBtn.addEventListener('click', switchPaymentMethod)
 })
 
 function switchPaymentMethod(e) {
@@ -453,7 +457,9 @@ function isPersonalIdValid() {
   mobileNumber.addEventListener('blur', activateFinalOrderButton);
   email.addEventListener('blur', activateFinalOrderButton);
   personalId.addEventListener('blur', activateFinalOrderButton);
+  privacyPolicyCheckbox.addEventListener('click', activateFinalOrderButton);
 
+  activateFinalOrderButton();
 
 // DETTA GÖR SÅ ATT FÄLTET RENSAS NÄR MAN KLICKAR PÅ RENSAKNAPPEN
 
@@ -475,7 +481,12 @@ clearFormButton.addEventListener('click', clearForm)
   activateOrderButton();
 };
 
+finalOrderButton.addEventListener('click', activateOrderMessage);
+const orderMessage = document.querySelector('#orderMessage');
 
+function activateOrderMessage() {
+  orderMessage.innerHTML = 'Thank you for your order! It will be delivered in 3-5 business days.';
+};
 
 /* 
 

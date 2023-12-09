@@ -99,7 +99,7 @@
                 </label>
     
                 <label>
-                  <input type="radio" name="payment-option" value="card">
+                  <input type="radio" name="payment-option" value="card" id="cardOption">
                   <span>Card</span>
                 </label>
               </div>
@@ -142,10 +142,14 @@
             </label>
 
             <button id="clearFormButton">Clear Form</button>
-            <button id="finalOrderButton" type="submit" disabled>Send order</button>
+            <button id="finalOrderButton" type="button" disabled>Send order</button>
             
         </form>
         </section>
+
+        <div id="orderMessageContainer">
+          <p id="orderMessage"></p>
+        </div>
     </main>
     <script type="module" src="main.mjs"></script>
   </body>
