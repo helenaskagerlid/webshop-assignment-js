@@ -28,7 +28,7 @@ header {
 
 h1 {
     font-size: 2.3rem;
-    margin-right: 5vw;
+    margin-right: 1vw;
 }
 
 h2 {
@@ -45,10 +45,13 @@ p, span {
     font-size: 1.1rem;
 }
 
-#shoppingCartSummary {
+.shoppingCartSummary {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     background-color: white;
-    width: 35vh;
-    height: 30vh;
+    width: 55vw;
+    height: 50vh;
     border: 10px solid $green-color;
     margin: 10px;
     padding: 10px;
@@ -100,5 +103,9 @@ label {
 .hideError {
     visibility: hidden;
 
+}
+
+.hideStyling {
+    visibility: hidden;
 }
 
