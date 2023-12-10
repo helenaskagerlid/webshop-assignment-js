@@ -61,28 +61,28 @@
             <label for="firstname">First name:
               <input type="text" id="firstname" name="firstname" required>
             </label>
-            <span id="firstnameErrorMessage" class="hideError firstnameErrorMessage">Not a valid name</span>
+            <span id="firstnameErrorMessage" class="hideError firstnameErrorMessage">Not a valid name, only use letters</span>
             
             <label for="lastname">Last name:
               <input type="text" id="lastname" name="lastname" required>
             </label>
-            <span id="lastnameErrorMessage" class="hideError lastnameErrorMessage">Not a valid last name</span>
+            <span id="lastnameErrorMessage" class="hideError lastnameErrorMessage">Not a valid last name, only use letters</span>
     
             <label for="streetname">Street name:
               <input type="text" id="streetname" name="streetname" required>
             </label>
-            <span id="streetnameErrorMessage" class="hideError streetnameErrorMessage">Not a valid street name</span>
+            <span id="streetnameErrorMessage" class="hideError streetnameErrorMessage">Not a valid street name, use letters and at least one number</span>
             
             <label for="postCode">Postcode:
               <input type="text" id="postCode" name="postCode" required>
             </label>
-            <span id="postCodeErrorMessage" class="hideError postCodeErrorMessage">Not a valid postcode</span>
+            <span id="postCodeErrorMessage" class="hideError postCodeErrorMessage">Not a valid postcode, only use numbers</span>
             
 
             <label for="city">City:
               <input type="text" id="city" name="city" required>
             </label>
-            <span id="cityErrorMessage" class="hideError cityErrorMessage">Not a valid City name</span>
+            <span id="cityErrorMessage" class="hideError cityErrorMessage">Not a valid City name, only use letters</span>
 
             <label for="portcode">Port code
               <input type="text" id="portcode" name="portcode">
@@ -91,10 +91,10 @@
             <label for="mobile">Mobile Number:
               <input type="tel" id="mobile" name="mobile" pattern="[0-9]{10}" placeholder="e.g., 1234567890" required>
             </label>
-            <span id="mobileErrorMessage" class="hideError mobileErrorMessage">Not a valid mobile number</span>
+            <span id="mobileErrorMessage" class="hideError mobileErrorMessage">Not a valid mobile number, only use numbers</span>
             
             <label for="email">Email:
-              <input type="email" id="email" name="email" required>
+              <input type="email" id="email" name="email" placeholder="name@email.com" required>
             </label>
             <span id="emailErrorMessage" class="hideError emailErrorMessage">Not a valid email adress</span>
             
@@ -140,6 +140,11 @@
                 </label>
               </div>
             </div>
+
+            <label>
+              <span>Coupon Code:</span>
+              <input type="text" name="couponCode" class="couponCode">
+            </label>
 
             <label>
               <input type="checkbox" name="privacyPolicy" id="privacyPolicyCheckbox" required>
