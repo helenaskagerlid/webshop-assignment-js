@@ -42,13 +42,29 @@ Helena Skagerlid - https://github.com/helenaskagerlid
 - Vite
 
 ## Screenshots of the project
+
+The webshop in desktop, first page
 ![The webshop in desktop](<Screenshot-desktop-firstpage.png>)
+
+The webshop in desktop dark mode
 ![The webshop in desktop dark mode](Screenshot-dark-mode-desktop.png.png)
+
+The cart summary desktop
 ![The cart summary desktop](Screenshot-desktop-cart-summary.png.png)
+
+The order form desktop
 ![The order form desktop](Screenshot-orderform.png.png)
+
+All of the mobile version
 ![All of the mobile version](Screenshot-mobile-version.png)
 
 ## Validation
+
+Validation of my HTML-code
 ![Validation of my HTML](Screenshot-validation-html.png)
+
+Validation of my CSS-code
 ![Validation of my CSS](Screenshot-validation-css.png)
+
+A Lighthouse report on performance and accessiility on my project
 ![Lighthouse report on Performance and Accessibility](Lighthouse-report-performance-accessibility.png)
