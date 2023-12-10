@@ -274,7 +274,38 @@ function updateCart() {
 
 }
 
-// FUNKTION SOM GÖR ATT KLASSEN ACTIVE ADDERAS
+//TIMER FÖR MEDDELANDE SOM VISAR ATT KUNDEN ÄR FÖR LÅNGSAM EFTER 15 MINUTER
+
+const orderBtn = document.querySelector('#orderButton');
+const timerMessage = document.querySelector('#timerMessage');
+
+orderBtn.addEventListener('click', startTimer);
+
+function startTimer() {
+  timerMessage.innerHTML='';
+  setTimeout(activateMessage, 15 * 60 * 1000)
+}
+
+function activateMessage() {
+  timerMessage.innerHTML='You are too slow! The form will be cleared';
+  timerMessage.style.color= 'red';
+  timerMessage.style.fontFamily= 'bitter';
+  timerMessage.style.fontSize= '1rem';
+  timerMessage.style.backgroundColor= 'white';
+  timerMessage.style.padding= '25px';
+  timerMessage.style.marginTop= '15px';
+  timerMessage.style.border= '5px solid red';
+
+  clearForm();
+
+  timerMessage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  setTimeout(function() {
+    timerMessage.remove();
+  }, 15 * 1000);
+}
+
+// FUNKTION SOM GÖR ATT KLASSEN ACTIVE ADDERAS OCH ORDERFORM SYNS
 
 function showOrderForm() {
     orderFormSection.classList.add('active');
@@ -520,6 +551,12 @@ const orderMessage = document.querySelector('#orderMessage');
 function activateOrderMessage() {
   orderMessage.classList.remove('hideStyling');
   orderMessage.innerHTML = 'Thank you for your order! It will be delivered in 3-5 business days.';
+
+  setTimeout(function() {
+    orderMessage.remove();
+  }, 15 * 1000);
+
+  clearForm();
 };
 
 // FUNKTION SOM GÖR ATT SIDAN SCROLLAR TILL ORDERMESSAGE VID KLICK PÅ FINALORDERBUTTON
