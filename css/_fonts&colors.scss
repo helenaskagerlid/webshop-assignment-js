@@ -3,13 +3,15 @@ $semi-transparent-green: rgba($green-color, 0.5);
 $black-color: black;
 $white-color: white;
 $red-color: red;
+$dark-mode-green-color: rgb(100, 106, 94);
+$grey-color: grey;
 
 body {
     background-color: $semi-transparent-green;
 }
 
 body.darkMode {
-    background-color: rgb(100, 106, 94);
+    background-color: $dark-mode-green-color;
 }
 
 header {
@@ -26,7 +28,7 @@ header {
         margin-left: 1rem;
     }
 
-    #cartButton {
+    .cartButton {
         background-color: transparent;
         border-style: none;
         position: relative;
@@ -40,11 +42,11 @@ header {
         
     }
 
-    #cartItemCount {
+    .cartItemCount {
         position: absolute;
         top: -10px;
         left: 25px;
-        background-color: white;
+        background-color: $white-color;
         border-radius: 50%;
         padding: 0.3em 0.6em 0.3em 0.6em;
         font-size: 0.8rem;
@@ -61,7 +63,7 @@ h2, h3, label {
     font-weight: 600;
 }
 
-#sortingDropdown {
+.sortingDropdown {
     font-family: 'Open Sans';
 }
 
@@ -85,7 +87,7 @@ p {
 .add, .subtract {
     border-radius: 8px;
     padding: 5px 9px 5px 9px;
-    background-color: white;
+    background-color: $white-color;
     color: $black-color;
     border: solid $green-color 2px;
     font-size: 1.3rem;
@@ -94,7 +96,7 @@ p {
 
 .firstnameErrorMessage, .lastnameErrorMessage, .streetnameErrorMessage, .postCodeErrorMessage,
 .cityErrorMessage, .mobileErrorMessage, .emailErrorMessage, .personalIdErrorMessage {
-    color: red;
+    color: $red-color;
     font-size: 0.8rem;
 
 } 
@@ -111,7 +113,7 @@ p {
 .clearFormButton, .orderButton {
     border-radius: 8px;
     padding: 5px 9px 5px 9px;
-    background-color: white;
+    background-color: $white-color;
     color: $black-color;
     border: solid $green-color 2px;
     font-size: 1rem;
@@ -120,7 +122,7 @@ p {
 }
 
 .finalOrderButton.disabled {
-    background-color: grey;
+    background-color: $grey-color;
     border-radius: 8px;
     padding: 5px 9px 5px 9px;
     color: $black-color;
@@ -133,7 +135,7 @@ p {
 .finalOrderButton:not(:disabled) {
     border-radius: 8px;
     padding: 5px 9px 5px 9px;
-    background-color: white;
+    background-color: $white-color;
     color: $black-color;
     border: solid $green-color 2px;
     font-size: 1rem;

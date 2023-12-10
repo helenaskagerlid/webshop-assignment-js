@@ -32,9 +32,9 @@ function scrollToCart() {
   cartContainer.scrollIntoView({behavior: 'smooth'});
 };
 
-let productsSorted = false; 
-
 /** SORTERING AV PRODUKTER UTEFTER PRIS/NAMN/KATEGORI*/
+
+let productsSorted = false; 
 
 const sortingDropdown = document.querySelector('#sortingDropdown');
 const productContainer = document.querySelector('#productList');
@@ -51,20 +51,22 @@ function sortProductList() {
   } else if (selectedOption === 'category') {
     sortedMonsters.sort((prod1, prod2) => prod1.category.localeCompare(prod2.category));
   } else if (selectedOption === 'rating') {
-    sortedMonsters.sort((b, a) => b.rating - a.rating);
+    sortedMonsters.sort((b, a) => a.rating - b.rating);
   }
 
   productsSorted = true; 
 
-  printBabyMonsters(sortedMonsters);
+  printMonsters(sortedMonsters);
 
 };
 
 sortingDropdown.addEventListener('change', sortProductList);
 
-printBabyMonsters();
+printMonsters();
 
-function updateCartItemCount() {
+// FUNKTION SOM UPPDATERAR SIFFRAN FÖR ANTALET PRODUKTER I VARUKORGEN PÅ DEN LILLA VARUKORGSIKONEN UPPE TILL HÖGER
+
+function updateCartIconCount() {
   const cartItemCountSpan = document.querySelector('#cartItemCount');
   let totalAmount = 0;
 
@@ -77,12 +79,12 @@ function updateCartItemCount() {
   activateOrderButton();
 }
 
-updateCartItemCount();
+updateCartIconCount();
 
  /**PRINTAR UT MONSTREN PÅ SIDAN SAMT SKAPAR KNAPPARNA FÖR PLUS OCH MINUS OCH GER DEM
   * UNIKA ID-en
   */
-function printBabyMonsters(monsters) {
+function printMonsters(monsters) {
   if (productsSorted) {
     monsters = sortedMonsters;
   }
@@ -114,7 +116,7 @@ function printBabyMonsters(monsters) {
 
   activatePlusMinusButtons();
   printCartMonsters();
-  updateCartItemCount();
+  updateCartIconCount();
 }
 
 /**GÖR ATT PLUS OCH MINUS KNAPPARNA FUNKAR NÄR MAN KLICKAR PÅ DEM SÅ ATT ANTALET PRODUKTER
@@ -123,7 +125,6 @@ function printBabyMonsters(monsters) {
 
 function decreaseAmount(e) {
   const index = fantasyMonsters.findIndex(item => item.productNo == e.currentTarget.dataset.id);
-  console.log(e.currentTarget.dataset.id);
 
   if (fantasyMonsters[index].amount <= 0) {
     fantasyMonsters[index].amount = 0;
@@ -131,21 +132,26 @@ function decreaseAmount(e) {
     fantasyMonsters[index].amount--;
   }
  
-  printBabyMonsters();
+  printMonsters();
 }
 
 function increaseAmount(e) {
   const index = fantasyMonsters.findIndex(item => item.productNo == e.currentTarget.dataset.id);
   fantasyMonsters[index].amount++;
-  printBabyMonsters();
+  printMonsters();
   updateCart();
 }
+
+// DETTA FIXAR SÅ ATT NÄR MAN KLIKCAR PÅ DIN LILLA VARUKORGSIKONEN SCROLLAS MAN NED TILL 
+// VARUKURSSAMMANFATTNINGEN
 
 cartButton.addEventListener('click', function() {
   shoppingCartSummary.scrollIntoView({ behavior: 'smooth' });
 });
 
-printBabyMonsters();
+printMonsters();
+
+// EVENT-LYSSNARE SOM FIXAR SÅ ATT FUNKTIONERNA OVAN FÖR PLUS/MINUS AKTIVERAS 
 
 function activatePlusMinusButtons() {
   const minusButtons = document.querySelectorAll('.subtract');
@@ -502,7 +508,7 @@ clearFormButton.addEventListener('click', clearForm)
   });
 
   printCartMonsters();
-  updateCartItemCount();
+  updateCartIconCount();
   activateOrderButton();
 };
 

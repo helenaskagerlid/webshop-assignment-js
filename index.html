@@ -1,14 +1,14 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="/vite.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@300;600&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
     <title>Ugly & Pawsome Webshop</title>
   </head>
   <body>
@@ -25,7 +25,7 @@
           <path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 
           11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 
           0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg> 
-          <span id="cartItemCount">0</span> 
+          <span id="cartItemCount" class="cartItemCount">0</span> 
        </button>
       </div>
     </header>
@@ -53,9 +53,9 @@
         </section>
         <button id="orderButton" class="orderButton">Order</button>
 
-        <section id="orderFormSection">
+        <section class="orderFormSection" id="orderFormSection">
           <h2>Order form</h2>
-          <form id="orderForm">
+          <form class="orderForm" id="orderForm">
             <label for="firstname">First name:
               <input type="text" id="firstname" name="firstname" required>
             </label>
@@ -98,7 +98,7 @@
             
             <label>Payment method</label>
 
-            <div id="payment-options">
+            <div class="payment-options" id="payment-options">
 
               <div class="selectors">
                 <label>
@@ -120,7 +120,7 @@
               </div>
               <span id="personalIdErrorMessage" class="hideError personalIdErrorMessage">Not a valid identity number</span>
 
-              <div id="card">
+              <div class="card" id="card">
                 <label>
                   <span>Card number</span>
                   <input type="number" id="creditCardNumber" value="5100080000000000">
