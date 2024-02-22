@@ -5,7 +5,7 @@
 
 ## About 
 
-This webshop was a individual project we did in our Introduction Course in Javascript (JS). The assigment was to learn the basics in JS by creating a webshop from an imagined client. The client had specific requierments that we were expected to deliver to them. Over the course of 4 weeks I created this webshop.
+This webshop was a individual project we did in our Introduction Course in Javascript (JS). The assigment was to learn the basics in JS by creating a webshop from an imagined client. The client had specific requierments that we were expected to deliver to them. I choose to do a 'fantasy-monster-shop' since my friends child wished I do that. Over the course of 4 weeks I created this webshop. 
 
 ## Link to the project
 
