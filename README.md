@@ -56,7 +56,8 @@ The order form desktop
 ![The order form desktop](Screenshot-orderform.png.png)
 
 All of the mobile version
-![All of the mobile version](Screenshot-of-mobile-version.png)
+![The top of the mobile version](Screenshot-mobile-version-right.png) 
+![The bottom of the mobile version](Screenshot-mobile-version-left.png)
 
 ## Validation
 
